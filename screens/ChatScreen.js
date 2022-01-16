@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Button, TouchableOpacity, MaskedViewComponent } from "react-native"; 
+ 
+
 import firebase from "../database/firebaseDB";
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GiftedChat } from 'react-native-gifted-chat'; 
 
-const db = firebase.firestone().collection("messages");
+
+const db = firebase.firestore().collection("messages");
 
 //const ChatScreen = ({ navigation }) => {
 export default function ChatScreen({ navigation }) {
@@ -16,18 +19,21 @@ export default function ChatScreen({ navigation }) {
 		const unsubscribe = db
 			.orderBy('createdAt', 'desc')
 			.onSnapshot((collectionSnapshot) => {
-				const serverMessages = collectionSnapshot.docs.map((doc) =>doc.data());
-				// const serverMessages = collectionSnapshot.docs.map((doc) => {
-					
-				// 	const data = doc.data();  
-				// 	const jsDate = new Date(data.createAt.seconds * 1000);  
+				//const serverMessages = collectionSnapshot.docs.map((doc) =>doc.data());
+				const serverMessages = collectionSnapshot.docs.map((doc) => {
+					 
+					 const data = doc.data();  
+					 console.log(data);   
+					 return data;
+					  
+					// const jsDate = new Date(data.createAt.seconds * 1000);  
 
-				// 	const newDoc = {
-				// 		...data,
-				// 		createAt: jsDate,
-				// 	};
-				// 	return newDoc;
-				// })
+					// const newDoc = {
+					// 	...data, 
+					// 	createAt: jsDate,
+					// }; 
+					//return newDoc; 
+				})
 				setMessages(serverMessages);
 			})
 

@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+
 import firebase from "../database/firebaseDB";
 
 const db = firebase.firestore();
